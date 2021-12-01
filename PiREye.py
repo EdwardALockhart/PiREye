@@ -44,8 +44,8 @@ GPIO_PIR = 4 # PIR sensor GPIO pin number (BCM)
 RECIPIENT = "" # Email address to send data to
 USER = "@gmail.com" # Raspberry Pi's email account
 APP_PWD = "" # App password
-SERVER = "smtp.gmail.com" # STMP server
-PORT = 587 # STMP server port
+SMTP_SERVER = "smtp.gmail.com" # SMTP server
+SMTP_PORT = 587 # SMTP server port
 
 DIRECTORY = "/media/pi/STORAGE" # Output detections folder location
 TIMES = ["09:00:00", "21:00:00"] # Times in HH:MM:SS to send daily status updates
@@ -53,7 +53,7 @@ TIMES = ["09:00:00", "21:00:00"] # Times in HH:MM:SS to send daily status update
 
 
 #-----FUNCTIONS
-def send_mail_attachments(user, app_pwd, recipient, subject, body, files, server, port):
+def send_mail_attachments(user, app_pwd, recipient, subject, body, files, smtp_server, smtp_port):
     msg = MIMEMultipart()
     msg["From"] = user
     msg["To"] = recipient
@@ -66,7 +66,7 @@ def send_mail_attachments(user, app_pwd, recipient, subject, body, files, server
         part["Content-Disposition"] = 'attachment; filename = "%s"' % basename(i)
         msg.attach(part)
 
-    with smtplib.SMTP(server, port, timeout = 15) as mail:
+    with smtplib.SMTP(smtp_server, smtp_port, timeout = 15) as mail:
         mail.ehlo() # Identify ourselves
         mail.starttls() # Start encryption
         mail.ehlo() # Identify ourselves as encrypted
@@ -155,8 +155,8 @@ try:
                               subject = armed_time,
                               body = '',
                               files = None,
-                              server = SERVER,
-                              port = PORT)
+                              smtp_server = SMTP_SERVER,
+                              smtp_port = SMTP_PORT)
     except Exception:
         pass
     
@@ -173,8 +173,8 @@ try:
                                       subject = update_time,
                                       body = '',
                                       files = None,
-                                      server = SERVER,
-                                      port = PORT)
+                                      smtp_server = SMTP_SERVER,
+                                      smtp_port = SMTP_PORT)
             except Exception:
                 pass
         
@@ -194,8 +194,8 @@ try:
                                       subject = detection_time,
                                       body = '',
                                       files = sequence,
-                                      server = SERVER,
-                                      port = PORT)
+                                      smtp_server = SMTP_SERVER,
+                                      smtp_port = SMTP_PORT)
             except Exception:
                 pass
             
@@ -225,8 +225,8 @@ finally:
                                   subject = disarmed_time,
                                   body = '',
                                   files = None,
-                                  server = SERVER,
-                                  port = PORT)
+                                  smtp_server = SMTP_SERVER,
+                                  smtp_port = SMTP_PORT)
             print("Status Transmitted")
         except Exception:
             pass
