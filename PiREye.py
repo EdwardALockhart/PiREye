@@ -55,15 +55,15 @@ TIMES = ["09:00:00", "21:00:00"] # Times in HH:MM:SS to send daily status update
 #-----FUNCTIONS
 def send_mail_attachments(user, app_pwd, recipient, subject, body, files, server, port):
     msg = MIMEMultipart()
-    msg['From'] = user
-    msg['To'] = recipient
-    msg['Subject'] = subject
+    msg["From"] = user
+    msg["To"] = recipient
+    msg["Subject"] = subject
     msg.attach(MIMEText(body))
 
     for i in files or []:
-        with open(i, 'rb') as file:
+        with open(i, "rb") as file:
             part = MIMEApplication(file.read(), Name = basename(i))
-        part['Content-Disposition'] = 'attachment; filename = "%s"' % basename(i)
+        part["Content-Disposition"] = 'attachment; filename = "%s"' % basename(i)
         msg.attach(part)
 
     with smtplib.SMTP(server, port, timeout = 15) as mail:
@@ -153,7 +153,7 @@ try:
                               app_pwd = APP_PWD,
                               recipient = RECIPIENT,
                               subject = armed_time,
-                              body = armed_time,
+                              body = '',
                               files = None,
                               server = SERVER,
                               port = PORT)
@@ -171,7 +171,7 @@ try:
                                       app_pwd = APP_PWD,
                                       recipient = RECIPIENT,
                                       subject = update_time,
-                                      body = update_time,
+                                      body = '',
                                       files = None,
                                       server = SERVER,
                                       port = PORT)
@@ -192,7 +192,7 @@ try:
                                       app_pwd = APP_PWD,
                                       recipient = RECIPIENT,
                                       subject = detection_time,
-                                      body = detection_time,
+                                      body = '',
                                       files = sequence,
                                       server = SERVER,
                                       port = PORT)
@@ -223,7 +223,7 @@ finally:
                                   app_pwd = APP_PWD,
                                   recipient = RECIPIENT,
                                   subject = disarmed_time,
-                                  body = disarmed_time,
+                                  body = '',
                                   files = None,
                                   server = SERVER,
                                   port = PORT)
