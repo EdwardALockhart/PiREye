@@ -227,6 +227,5 @@ finally:
                                   files = None,
                                   smtp_server = SMTP_SERVER,
                                   smtp_port = SMTP_PORT)
-            print("Status Transmitted")
         except Exception:
             pass
