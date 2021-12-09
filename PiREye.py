@@ -215,7 +215,7 @@ finally:
     camera.close()
     GPIO.cleanup()
     if not armed:
-        print(datetime.now().strftime("Cancelled"))
+        print("Cancelled")
     else:
         disarmed_time = datetime.now().strftime("*** DISARMED *** %Y-%m-%d %H:%M:%S")
         print(disarmed_time)
